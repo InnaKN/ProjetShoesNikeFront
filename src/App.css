@@ -1,0 +1,45 @@
+.list-item-container{
+    display: flex;
+    background-color: #f5f5f5;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.list-title{
+    color: deepskyblue;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.list-image img{
+    width: 150px;
+    margin-right: 20px;
+    padding: 6px;
+}
+.list-description{
+    margin-bottom: 10px;
+}
+.list-description-images img{
+    width: 50px;
+    padding:4px;
+}
+
+.paginator{
+    display: flex;
+}
+.pager-item{
+    background-color: cornflowerblue;
+    padding: 10px;
+    border-radius: 25px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.pager-item.active{
+    background-color: #f5f5f5;
+}
+
+.detail-image-carousel{
+    width: 500px;
+}
