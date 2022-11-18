@@ -10,31 +10,45 @@ import {useNavigate} from "react-router-dom";
     const [shoesList, setShoesList] = useState([])
     const [pageNumber, setPageNumber] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
-    const [itemsPerPage, setItemsPerPage] = useState(1)
+    const [itemsPerPage, setItemsPerPage] = useState(1);
+    const [pattern, setPattern] = useState('');
 
     useEffect(() => {
-      axios.get("http://localhost:4002/api/shoes/?pageNumber="+pageNumber)
+      
+      let queryParams='';
+      if(pageNumber>1){
+        queryParams+='?pageNumber='+pageNumber;
+      }
+      if(pattern){
+        queryParams+=(queryParams?'&':'?')+'pattern='+pattern;
+      }
+      axios.get("http://localhost:4002/api/shoes/"+queryParams)
           .then((response)=>{
             setShoesList(response.data.shoes);
-            setTotalPages(response.data.count);
+            setTotalPages(Math.ceil(response.data.count/response.data.itemsPerPage));
             setItemsPerPage(response.data.itemsPerPage)
             console.log('data: ',response)
           });
-   },[pageNumber]);
+   },[pageNumber, pattern]);
     
+const handleSearch =function(event){
+ console.log('search EVENT', event.target.value);
+ const valToSearch = event.target.value;
+ setPattern(valToSearch);
 
+}
 
   return (
         <Container>
           
             <h2>ShoeMatcher</h2>
-            <input type="search"></input>
+            <input type="search" onChange={handleSearch}></input>
             <div style={{ display: shoesList.length >0? 'block': 'none'}}  >
               <div className="paginator">
               {(() => {
                 let pagerItems = [];
-                for (let i = 1; i <= totalPages/itemsPerPage; i++) {
-                  pagerItems.push(<div key={i} className={pageNumber===i?'pager-item active':'pager-item'} onClick={() => {setPageNumber(i)}}>{i}</div>);
+                for (let i = 1; i <= totalPages; i++) {
+                  pagerItems.push(<div key={i} className={((i===totalPages&&pageNumber>totalPages)||pageNumber===i)?'pager-item active':'pager-item'} onClick={() => {setPageNumber(i)}}>{i}</div>);
                 }
                 return pagerItems;
               })()}
@@ -65,8 +79,8 @@ import {useNavigate} from "react-router-dom";
             <div className="paginator">
               {(() => {
                 let pagerItems = [];
-                for (let i = 1; i <= totalPages/itemsPerPage; i++) {
-                  pagerItems.push(<div key={i} className={pageNumber===i?'pager-item active':'pager-item'} onClick={() => {setPageNumber(i)}}>{i}</div>);
+                for (let i = 1; i <=  Math.ceil(totalPages/itemsPerPage); i++) {
+                  pagerItems.push(<div key={i} className={((i===totalPages&&pageNumber>totalPages)||pageNumber===i)?'pager-item active':'pager-item'} onClick={() => {setPageNumber(i)}}>{i}</div>);
                 }
                 return pagerItems;
               })()}

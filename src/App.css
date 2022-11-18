@@ -40,6 +40,13 @@
     background-color: #f5f5f5;
 }
 
+.detail-main{
+    display: flex;
+}
 .detail-image-carousel{
-    width: 500px;
+    width: 50%;
+}
+.detail-image-carousel img{
+   width:100%;
+   height: auto;;
 }
