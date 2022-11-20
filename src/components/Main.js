@@ -77,9 +77,9 @@ const handleSearch =function(event){
               }
             </div>
             <div className="paginator">
-              {(() => {
+            {(() => {
                 let pagerItems = [];
-                for (let i = 1; i <=  Math.ceil(totalPages/itemsPerPage); i++) {
+                for (let i = 1; i <= totalPages; i++) {
                   pagerItems.push(<div key={i} className={((i===totalPages&&pageNumber>totalPages)||pageNumber===i)?'pager-item active':'pager-item'} onClick={() => {setPageNumber(i)}}>{i}</div>);
                 }
                 return pagerItems;
